@@ -37,6 +37,7 @@ create table if not exists Insumo (
 create table if not exists Estacion_Insumo (
     # Atributos
     idEstacion_insumo int not null,
+    cantidad int not null,
     # Llaves foraneas 
     fk_id_estacion_trabajo int not null,
     fk_id_insumo int not null,
@@ -99,13 +100,14 @@ create table if not exists Pedido_Concesionaria (
 
 create table if not exists Vehiculo (
     # Atributos
+    numeroChasis varchar(45) not null,
     patente varchar(45) not null,
     color varchar(45) not null,
     anio_fabricacion int null,
     fecha_ingreso datetime null,
     fecha_fin datetime null,
     # Llave primaria
-    primary key (patente),
+    primary key (numeroChasis),
     # Llaves foraneas
     fk_id_modelo int not null,
     fk_id_estacion_trabajo int null,
@@ -115,13 +117,13 @@ create table if not exists Vehiculo (
 create table if not exists Registro_Paso (
     # Atributos
     id_registro_paso int not null auto_increment,
-    fecha_hora_ingreso datetime not null,
-    fecha_hora_egreso datetime not null,
+    fecha_hora_ingreso datetime,
+    fecha_hora_egreso datetime,
     # Llave primaria
     primary key (id_registro_paso),
     # Llaves foraneas
     fk_id_estacion_trabajo int not null,
-    fk_patente_vehiculo varchar(45) not null
+    fk_numeroChasis_vehiculo varchar(45) not null
 );
 
 create table if not exists Pedido_Proveedor (
@@ -140,6 +142,7 @@ create table if not exists Detalle_Pedido_Proveedor (
     # Atributos
     id_detalle_pedido_proveedor int not null auto_increment,
     cantidad int not null,
+    precio float not null,
     # Llave primaria
     primary key (id_detalle_pedido_proveedor),
     # Llaves foraneas
@@ -236,8 +239,8 @@ references Estacion_Trabajo(id_estacion_trabajo);
 
 alter table Registro_Paso
 add constraint vehiculo_tiene_registros_paso
-foreign key (fk_patente_vehiculo)
-references Vehiculo(patente);
+foreign key (fk_numeroChasis_vehiculo)
+references Vehiculo(numeroChasis);
 
 alter table Pedido_Proveedor
 add constraint proveedor_recibe_pedidos
