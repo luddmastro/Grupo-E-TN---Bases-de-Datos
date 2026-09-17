@@ -7,6 +7,7 @@ Repositorio oficial del **Grupo E** para el Trabajo Práctico Integrador de la m
 
 ## Integrantes del Grupo
 
+* **Anabalon, Maximiliano Fabián**
 * **Mastroberti, Ludmila Belen**
 * **Merched, Danahe Abril**
 * **Ojeda, Franco Adrian**
