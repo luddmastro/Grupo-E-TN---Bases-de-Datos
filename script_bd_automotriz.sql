@@ -11,7 +11,9 @@ create table if not exists Linea_Montaje (
     nombre varchar(45) not null,
     prom_productivo float null,
     # Llave primaria
-    primary key (id_linea_montaje)
+    primary key (id_linea_montaje),
+    # Llave foranea
+    fk_id_modelo int not null
 );
 
 create table if not exists Estacion_Trabajo (
@@ -51,9 +53,7 @@ create table if not exists Proveedor (
     razon_social varchar(45) not null,
     cuit bigint not null,
     # Llave primaria
-    primary key (id_proveedor),
-    # Llave foranea
-    fk_id_estacion_trabajo int not null
+    primary key (id_proveedor)
 );
 
 create table if not exists Proveedor_Insumo (
@@ -73,9 +73,7 @@ create table if not exists Modelo (
     nombre varchar(45) not null,
     version varchar(45) not null,
     # Llave primaria
-    primary key (id_modelo),
-    # Llave foranea
-    fk_id_linea_montaje int not null
+    primary key (id_modelo)
 );
 
 create table if not exists Concesionaria (
@@ -192,11 +190,6 @@ add constraint insumo_usado_en_estaciones
 foreign key (fk_id_insumo)
 references Insumo(id_insumo);
 
-alter table Proveedor
-add constraint proveedor_abastece_estacion
-foreign key (fk_id_estacion_trabajo)
-references Estacion_Trabajo(id_estacion_trabajo);
-
 alter table Proveedor_Insumo
 add constraint insumo_provisto_por_proveedor
 foreign key (fk_id_insumo)
@@ -207,10 +200,10 @@ add constraint proveedor_ofrece_insumos
 foreign key (fk_id_proveedor)
 references Proveedor(id_proveedor);
 
-alter table Modelo
-add constraint linea_montaje_produce_modelos
-foreign key (fk_id_linea_montaje)
-references Linea_Montaje(id_linea_montaje);
+alter table Linea_Montaje
+add constraint modelo_tiene_linea_montaje
+foreign key (fk_id_modelo)
+references Modelo(id_modelo);
 
 alter table Pedido_Concesionaria
 add constraint concesionaria_realiza_pedidos
